@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
-.ImageGallery {
+export const ImageGalleryList = styled.ul`
+
     display: grid;
     max-width: calc(100vw - 48px);
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -12,4 +12,4 @@ export const Container = styled.div`
     list-style: none;
     margin-left: auto;
     margin-right: auto;
-  }`
+  `
