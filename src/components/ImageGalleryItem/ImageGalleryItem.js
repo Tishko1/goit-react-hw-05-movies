@@ -1,39 +1,35 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
 import ModalWindow from '../Modal/Modal';
 
-class ImageGalleryItem extends Component {
-  state = {
-    isVisibleModal: false,
+function  ImageGalleryItem ({ id, webformatURL, largeImageURL, tags }) {
+  const [isVisibleModal, seIsVisibleModal] = useState(false);
+  
+
+  const showNCloseModal = () => {
+    seIsVisibleModal( isVisibleModal  => !isVisibleModal );
   };
 
-  showNCloseModal = () => {
-    this.setState(({ isVisibleModal }) => ({
-      isVisibleModal: !isVisibleModal,
-    }));
-  };
-
-  render() {
-    const { id, webformatURL, largeImageURL, tags } = this.props;
+  
     return (
       <GalleryItem key={id}>
         <GalleryImage
-          onClick={this.showNCloseModal}
+          onClick={showNCloseModal}
           src={webformatURL}
           alt={tags}
         />
-        {this.state.isVisibleModal && (
+        {isVisibleModal && (
           <ModalWindow
-            onClickCloseModal={this.showNCloseModal}
+            onClickCloseModal={showNCloseModal}
             largeImageURL={largeImageURL}
             tags={tags}
           />
         )}
       </GalleryItem>
     );
-  }
+  
 }
 export default ImageGalleryItem;
 
