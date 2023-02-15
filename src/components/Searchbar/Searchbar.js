@@ -14,7 +14,7 @@ export class Searchbar extends Component {
 
   handleInput = ({ target }) => {
     this.setState({ [target.name]: target.value });
-  };
+  }; 
 
   handleSubmit = event => {
     event.preventDefault();

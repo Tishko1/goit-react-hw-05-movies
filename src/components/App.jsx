@@ -48,7 +48,13 @@ export class App extends Component {
   };
 
   onSumbitSearch = searchWord => {
-    this.setState({ inputQuery: searchWord });
+    this.setState({
+      inputQuery: searchWord,
+      photos: [],
+      currentPage: 1,
+      isLoading: false,
+      showLoadMore: false
+    });
   };
 
   render() {
