@@ -2,11 +2,10 @@ import { Component } from 'react';
 import { fetchPhotosByQuery } from 'services/api';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Loader} from './Loader/Loader';
-import {Button} from './Button/Button';
+import { Loader } from './Loader/Loader';
+import { Button } from './Button/Button';
 
-export class App extends Component{
-
+export class App extends Component {
   state = {
     error: null,
     inputQuery: '',
@@ -16,13 +15,18 @@ export class App extends Component{
     showLoadMore: false,
   };
 
-
-   async componentDidUpdate(_, prevState) {
+  async componentDidUpdate(_, prevState) {
     const { inputQuery, currentPage } = this.state;
-    if (prevState.inputQuery !== inputQuery || prevState.currentPage !== currentPage) {
+    if (
+      prevState.inputQuery !== inputQuery ||
+      prevState.currentPage !== currentPage
+    ) {
       this.setState({ isLoading: true });
       try {
-        const { hits, totalHits } = await fetchPhotosByQuery(inputQuery, currentPage);
+        const { hits, totalHits } = await fetchPhotosByQuery(
+          inputQuery,
+          currentPage
+        );
         this.setState(prevState => ({
           photos: [...prevState.photos, ...hits],
           showLoadMore: currentPage < Math.ceil(totalHits / 12),
@@ -44,25 +48,18 @@ export class App extends Component{
   };
 
   onSumbitSearch = searchWord => {
-    this.setState({ inputQuery: searchWord,})
-  }
-     
-   render (){
-    const { photos, showLoadMore, isLoading  } = this.state;
+    this.setState({ inputQuery: searchWord });
+  };
+
+  render() {
+    const { photos, showLoadMore, isLoading } = this.state;
     return (
       <>
-      
-     
         <Searchbar onSumbitSearch={this.onSumbitSearch} />
         {isLoading && <Loader />}
         <ImageGallery photos={photos} />
-        {showLoadMore &&  (
-                    <Button
-           onButtonLoadMore={this.onButtonLoadMore}
-          />
-        )}
+        {showLoadMore && <Button onButtonLoadMore={this.onButtonLoadMore} />}
       </>
     );
-   }
+  }
 }
-

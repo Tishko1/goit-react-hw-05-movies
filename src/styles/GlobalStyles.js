@@ -1,19 +1,18 @@
 import { css } from '@emotion/react';
 
 export const GlobalStyles = css`
-  
   html {
     box-sizing: border-box;
     width: 100vw;
     overflow-x: hidden;
   }
-  
+
   *,
   *::before,
   *::after {
     box-sizing: inherit;
   }
-  
+
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -23,7 +22,7 @@ export const GlobalStyles = css`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   img {
     display: block;
     max-width: 100%;

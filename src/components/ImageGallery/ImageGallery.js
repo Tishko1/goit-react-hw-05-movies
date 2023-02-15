@@ -1,4 +1,3 @@
-
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import { ImageGalleryList } from './ImageGallery.styled';
 import PropTypes from 'prop-types';

@@ -18,7 +18,7 @@ export const theme = Object.freeze({
     large: '22px',
   },
   spacing: value => `${4 * value}px`,
-  even: value => value % 2===0,
+  even: value => value % 2 === 0,
   renderingColor: () => `${getRandomColor()}`,
   shadows: {
     small: '0 5px 7px -1px rgba(51, 51, 51, 0.23)',
