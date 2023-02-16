@@ -17,7 +17,6 @@ export const ImageGallery = ({ photos }) => {
   );
 };
 
-
 ImageGallery.propTypes = {
   photos: PropTypes.arrayOf(
     PropTypes.shape({

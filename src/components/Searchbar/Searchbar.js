@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import {
   Search,
   Form,
@@ -7,43 +7,37 @@ import {
   SearchFormLabel,
 } from './Searchbar.styled';
 
-export class Searchbar extends Component {
-  state = {
-    query: '',
+export function Searchbar({ onSumbitSearch }) {
+  const [query, setQuery] = useState('');
+
+  const handleInput = ({ target }) => {
+    setQuery(target.value);
   };
 
-  handleInput = ({ target }) => {
-    this.setState({ [target.name]: target.value });
-  }; 
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    if (this.state.query.trim() === '') {
+    if (query.trim() === '') {
       return alert('Введіть запит для пошуку!');
     }
-    this.props.onSumbitSearch(this.state.query);
-    this.setState({ query: '' });
+    onSumbitSearch(query);
+    setQuery('');
   };
 
-  render() {
-    return (
-      <Search>
-        <Form onSubmit={this.handleSubmit}>
-          <SearchFormButton type="submit">
-            {' '}
-            <SearchFormLabel>Search</SearchFormLabel>{' '}
-          </SearchFormButton>
-          <SearchFormInput
-            name="query"
-            value={this.state.query}
-            onChange={this.handleInput}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </Form>
-      </Search>
-    );
-  }
+  return (
+    <Search>
+      <Form onSubmit={handleSubmit}>
+        <SearchFormButton type="submit">Search</SearchFormButton>
+
+        <SearchFormInput
+          name="query"
+          value={query}
+          onChange={handleInput}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </Form>
+    </Search>
+  );
 }

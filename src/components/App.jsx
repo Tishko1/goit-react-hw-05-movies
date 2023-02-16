@@ -1,71 +1,58 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchPhotosByQuery } from 'services/api';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
 
-export class App extends Component {
-  state = {
-    error: null,
-    inputQuery: '',
-    photos: [],
-    currentPage: 1,
-    isLoading: false,
-    showLoadMore: false,
-  };
+export function App() {
+  const [error, setError] = useState(null);
+  const [inputQuery, setInputQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showLoadMore, setShowLoadMore] = useState(false);
+  const [photos, setPhotos] = useState([]);
 
-  async componentDidUpdate(_, prevState) {
-    const { inputQuery, currentPage } = this.state;
-    if (
-      prevState.inputQuery !== inputQuery ||
-      prevState.currentPage !== currentPage
-    ) {
-      this.setState({ isLoading: true });
+  useEffect(() => {
+    if (!inputQuery) return;
+
+    const getPhotos = async () => {
+      setIsLoading(true);
       try {
         const { hits, totalHits } = await fetchPhotosByQuery(
           inputQuery,
           currentPage
         );
-        this.setState(prevState => ({
-          photos: [...prevState.photos, ...hits],
-          showLoadMore: currentPage < Math.ceil(totalHits / 12),
-        }));
+        setPhotos(prevState => [...prevState, ...hits]);
+        setShowLoadMore(currentPage < Math.ceil(totalHits / 12));
       } catch (error) {
-        this.setState({ error: error.message });
+        setError(error.message);
       } finally {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
       }
-    }
-  }
+    };
+    getPhotos();
+  }, [inputQuery, currentPage]);
 
-  onButtonLoadMore = () => {
-    this.setState(prevState => {
-      return {
-        currentPage: prevState.currentPage + 1,
-      };
-    });
+  const onButtonLoadMore = () => {
+    setCurrentPage(prevState => prevState + 1);
   };
 
-  onSumbitSearch = searchWord => {
-    this.setState({
-      inputQuery: searchWord,
-      photos: [],
-      currentPage: 1,
-      isLoading: false,
-      showLoadMore: false
-    });
+  const onSumbitSearch = searchWord => {
+    setInputQuery(searchWord);
+    setIsLoading(false);
+    setShowLoadMore(false);
+    setCurrentPage(1);
+    setPhotos([]);
   };
 
-  render() {
-    const { photos, showLoadMore, isLoading } = this.state;
-    return (
-      <>
-        <Searchbar onSumbitSearch={this.onSumbitSearch} />
-        {isLoading && <Loader />}
-        <ImageGallery photos={photos} />
-        {showLoadMore && <Button onButtonLoadMore={this.onButtonLoadMore} />}
-      </>
-    );
-  }
+  return (
+    <>
+      <Searchbar onSumbitSearch={onSumbitSearch} />
+      {isLoading && <Loader />}
+      <ImageGallery photos={photos} />
+      {showLoadMore && <Button onButtonLoadMore={onButtonLoadMore} />}
+      {error && <p>Error{error}</p>}
+    </>
+  );
 }
