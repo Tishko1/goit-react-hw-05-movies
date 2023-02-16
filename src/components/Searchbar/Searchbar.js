@@ -27,7 +27,6 @@ export function Searchbar({ onSumbitSearch }) {
     <Search>
       <Form onSubmit={handleSubmit}>
         <SearchFormButton type="submit">Search</SearchFormButton>
-
         <SearchFormInput
           name="query"
           value={query}
