@@ -4,7 +4,7 @@ import {
   Form,
   SearchFormButton,
   SearchFormInput,
-  SearchFormLabel,
+  
 } from './Searchbar.styled';
 
 export function Searchbar({ onSumbitSearch }) {

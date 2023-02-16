@@ -4,28 +4,33 @@ import PropTypes from 'prop-types';
 import { ModalOverlay, ModalImg } from './Modal.styled';
 
 export function ModalWindow({ onClickCloseModal, largeImageURL, tags }) {
-  useEffect(() => {
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, []);
-
-  // componentDidMount() {
-  //   window.addEventListener('keydown', this.onKeyDown);
-  // }
-
-  const onKeyDown = e => {
-    if (e.code === 'Escape') {
-      onClickCloseModal();
-    }
-  };
+  
+  
 
   const onOverlayClick = event => {
     if (event.target.dataset.name === 'Overlay') {
       onClickCloseModal();
     }
   };
+  
+  useEffect(() => {
+
+    const onKeyDown = e => {
+      if (e.code === 'Escape') {
+        onClickCloseModal();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [onClickCloseModal]);
+
+  // componentDidMount() {
+  //   window.addEventListener('keydown', this.onKeyDown);
+  // }
+
+  
 
   // componentWillUnmount() {
   //   window.removeEventListener('keydown', this.onKeyDown);
