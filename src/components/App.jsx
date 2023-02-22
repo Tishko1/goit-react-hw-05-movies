@@ -1,58 +1,40 @@
-import { useState, useEffect } from 'react';
-import { fetchPhotosByQuery } from 'services/api';
-import { Searchbar } from './Searchbar/Searchbar';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Loader } from './Loader/Loader';
-import { Button } from './Button/Button';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { lazy } from 'react';
 
-export function App() {
-  const [error, setError] = useState(null);
-  const [inputQuery, setInputQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showLoadMore, setShowLoadMore] = useState(false);
-  const [photos, setPhotos] = useState([]);
+import Layout from './Layout/Layout';
 
-  useEffect(() => {
-    if (!inputQuery) return;
+const Home = lazy(() => import('pages/Home/Home'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
+const Cast = lazy(() => import('./Cast/Cast'));
+const Reviews = lazy(() => import('./Reviews/Reviews'));
 
-    const getPhotos = async () => {
-      setIsLoading(true);
-      try {
-        const { hits, totalHits } = await fetchPhotosByQuery(
-          inputQuery,
-          currentPage
-        );
-        setPhotos(prevState => [...prevState, ...hits]);
-        setShowLoadMore(currentPage < Math.ceil(totalHits / 12));
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getPhotos();
-  }, [inputQuery, currentPage]);
+// import Home from 'pages/Home/Home';
+// import Movies from 'pages/Movies/Movies';
+// import MovieDetails from 'pages/MovieDetails/MovieDetails';
 
-  const onButtonLoadMore = () => {
-    setCurrentPage(prevState => prevState + 1);
-  };
+// import Layout from './Layout/Layout';
 
-  const onSumbitSearch = searchWord => {
-    setInputQuery(searchWord);
-    setIsLoading(false);
-    setShowLoadMore(false);
-    setCurrentPage(1);
-    setPhotos([]);
-  };
+// import Cast from './Cast/Cast';
+// import Reviews from './Reviews/Reviews';
 
+export const App = () => {
   return (
     <>
-      <Searchbar onSumbitSearch={onSumbitSearch} />
-      {isLoading && <Loader />}
-      <ImageGallery photos={photos} />
-      {showLoadMore && <Button onButtonLoadMore={onButtonLoadMore} />}
-      {error && <p>Error{error}</p>}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="movies" element={<Movies />} />
+
+          <Route path="movies/:movieId" element={<MovieDetails />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Route>
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
+      </Routes>
     </>
   );
-}
+};
+
+export default App;

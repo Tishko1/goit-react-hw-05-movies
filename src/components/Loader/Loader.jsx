@@ -1,7 +1,6 @@
 import { InfinitySpin } from 'react-loader-spinner';
 
-export const Loader = () => {
-  
+const Loader = () => {
   return (
     <div
       style={{
@@ -22,3 +21,5 @@ export const Loader = () => {
     </div>
   );
 };
+
+export default Loader;

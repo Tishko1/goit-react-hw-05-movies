@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-04-images",
+  "name": "goit-react-hw-05-movies",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Tishko1.github.io/goit-react-hw-04-images/",
+  "homepage": "https://Tishko1.github.io/goit-react-hw-05-movies/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -11,10 +11,12 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.3.2",
     "modern-normalize": "^1.1.0",
+    "notiflix": "^3.2.6",
     "pixabay-api": "^1.0.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-loader-spinner": "^5.3.4",
+    "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.3"
   },
