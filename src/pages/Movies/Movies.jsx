@@ -49,7 +49,7 @@ export default function Movies() {
     }
 
     fetchMovieByQuery(searchParams);
-  }, [query]);
+  }, [query, searchParams]);
 
   return (
     <Container>

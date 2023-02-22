@@ -46,9 +46,14 @@ export default function Cast() {
               <CastItem key={actor.id}>
                 <div>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
+                    src={
+                      actor.profile_path
+                        ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+                        : `https://zabavniki.club/wp-content/uploads/kino_2_11191428.jpg`
+                    }
                     alt={actor.name}
                     height="150px"
+                    width="100px"
                   />
                 </div>
                 <CastRightBox>

@@ -51,13 +51,10 @@ export default function MovieDetails() {
           <div>
             <img
               width="240px"
-              // src={`https://image.tmdb.org/t/p/w500/${searchedDetails.poster_path}`}
               src={
-                Boolean(
-                  `https://image.tmdb.org/t/p/w500/${searchedDetails.poster_path}`
-                )
+                searchedDetails.poster_path
                   ? `https://image.tmdb.org/t/p/w500/${searchedDetails.poster_path}`
-                  : './images/default-photo.jpeg'
+                  : `https://zabavniki.club/wp-content/uploads/kino_2_11191428.jpg`
               }
               alt={searchedDetails.tagline}
             />
