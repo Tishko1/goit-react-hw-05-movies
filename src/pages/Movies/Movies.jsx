@@ -32,11 +32,14 @@ export default function Movies() {
 
   useEffect(() => {
     if (!query) return;
-    async function fetchMovieByQuery(searchParams) {
+    
+    async function fetchMovieByQuery(query) {
+      console.log(query);
       try {
         setIsLoading(true);
 
-        const data = await requestMovieByQuery(searchParams);
+        const data = await requestMovieByQuery(query);
+        console.log(data);
         setFoundMovies([...data.results]);
         if (data.results.length === 0) {
           Notify.info('No movie found');
@@ -48,8 +51,8 @@ export default function Movies() {
       }
     }
 
-    fetchMovieByQuery(searchParams);
-  }, [query, searchParams]);
+    fetchMovieByQuery(query);
+  }, [query]);
 
   return (
     <Container>
